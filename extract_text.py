@@ -11,5 +11,5 @@ def extract_text_from_pdf(pdf_path):
         return text.strip()
     
     except Exception as e:
-        print(f"❌ Failed to extract text from {pdf_path}: {e}")
+        print(f" Failed to extract text from {pdf_path}: {e}")
         return None
