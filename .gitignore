@@ -1,14 +1,9 @@
-# Ignore virtual environment
+# Add these to .gitignore (create it if missing)
+echo "
+.env
 venv/
-
-# Ignore Python cache files
 __pycache__/
 *.pyc
-
-# Ignore user data
-*.log
-*.tmp
-
-# Ignore system files
-.DS_Store
-Thumbs.db
+*.secret
+config.json
+" >> .gitignore
