@@ -1,9 +1,14 @@
-# Add these to .gitignore (create it if missing)
-echo "
-.env
+# Python
 venv/
 __pycache__/
 *.pyc
+*.pyo
+.python-version
+
+# Secrets
+.env
 *.secret
-config.json
-" >> .gitignore
+config.local.json
+
+# Data
+papers/  # Exclude downloaded PDFs
