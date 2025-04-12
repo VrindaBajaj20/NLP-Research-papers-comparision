@@ -5,7 +5,7 @@ A Natural Language Processing (NLP) project that compares research papers using 
 
 ---
 
-## **📌 Table of Contents**  
+## **Table of Contents**  
 - [Features](#-features)  
 - [Installation](#-installation)  
 - [Methods](#-methods--techniques)  
