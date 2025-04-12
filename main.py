@@ -270,11 +270,11 @@ for filename in os.listdir("papers"):
         path = os.path.join("papers", filename)
         text = extract_text_from_pdf(path)
         if not text:
-            print(f"❌ PDF not found or empty: {path}")
+            print(f"PDF not found or empty: {path}")
             continue
 
         summary = summarize_text_offline(text, summarizer)
-        print("\n📝 Summary:\n")
+        print("\n Summary:\n")
         print(summary)
 '''
 
