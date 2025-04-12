@@ -71,7 +71,7 @@ Cosine Similarity
 ---
 
 ## Output 
-![Alt Text](image-path-or-url)
+![Alt Text](output.png)
 
 ---
 
