@@ -1,3 +1,4 @@
+
 {
-  "model_name": "facebook/bart-large-cnn"
+  "model_name": "t5-small"
 }

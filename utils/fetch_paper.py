@@ -1,44 +1,64 @@
 import arxiv
+from typing import List, Dict
+import requests
 import os
-import re
-import shutil
 
-def slugify(text):
-    return re.sub(r"[^\w\-_.]", "_", text)[:100]
-
-def fetch_and_download_papers(query="natural language processing", max_results=3, save_dir="papers"):
-    os.makedirs(save_dir, exist_ok=True)
-
-    search = arxiv.Search(
-        query=query,
-        max_results=max_results,
-        sort_by=arxiv.SortCriterion.SubmittedDate
-    )
-
-    papers = []
-    for result in search.results():
+class PaperFetcher:
+    def __init__(self, save_dir: str = "papers"):
+        os.makedirs(save_dir, exist_ok=True)
+        self.save_dir = save_dir
+        
+    def fetch_papers(self, query: str, max_results: int = 3) -> List[Dict]:
+        """Fetch papers with automatic query optimization"""
+        try:
+            search = arxiv.Search(
+                query=self._optimize_query(query),
+                max_results=max_results + 2,  # Get extras in case of failures
+                sort_by=arxiv.SortCriterion.Relevance
+            )
+            
+            papers = []
+            for result in search.results():
+                if len(papers) >= max_results:
+                    break
+                    
+                papers.append(self._process_result(result))
+            
+            return papers
+            
+        except Exception as e:
+            print(f"Search failed: {e}")
+            return []
+    
+    def _optimize_query(self, query: str) -> str:
+        """Improve query success rate"""
+        query = query.lower()
+        if "computer vision" in query and "transformer" in query:
+            return "(computer vision) AND (transformer OR vision transformer)"
+        return query
+    
+    def _process_result(self, result) -> Dict:
+        """Process a single search result"""
         paper_id = result.entry_id.split('/')[-1]
-        safe_id = slugify(paper_id)
-        title_slug = slugify(result.title)
-
-        target_filename = f"{safe_id}_{title_slug}.pdf"
-        full_path = os.path.join(save_dir, target_filename)
-
-        if not os.path.exists(full_path):
-            print(f"Downloading: {result.title}")
+        pdf_path = os.path.join(self.save_dir, f"{paper_id}.pdf")
+        
+        # Download PDF if needed
+        if not os.path.exists(pdf_path):
             try:
-                temp_path = result.download_pdf(dirpath=save_dir)
-                shutil.move(temp_path, full_path)  # Rename after download
-            except Exception as e:
-                print(f"Failed to download {result.title}: {e}")
-        else:
-            print(f"Already downloaded: {result.title}")
-
-        papers.append({
+                response = requests.get(result.pdf_url, timeout=10)
+                if response.status_code == 200:
+                    with open(pdf_path, 'wb') as f:
+                        f.write(response.content)
+            except:
+                pass
+        
+        return {
             "id": paper_id,
             "title": result.title,
+            "authors": [a.name for a in result.authors],
+            "published": result.published.strftime("%Y-%m-%d"),
             "summary": result.summary,
-            "pdf_url": result.pdf_url
-        })
-
-    return papers
+            "pdf_url": result.pdf_url,
+            "arxiv_url": f"https://arxiv.org/abs/{paper_id}",
+            "path": pdf_path
+        }

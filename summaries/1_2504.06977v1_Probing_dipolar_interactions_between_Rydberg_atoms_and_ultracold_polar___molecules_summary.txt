@@ -1,0 +1,20 @@
+🗝️ Important Keywords:
+- molecule
+- atoms
+- between
+- dipole
+- rydberg
+- electric
+- molecules
+- state
+- field
+- excitation
+
+🚀 Main Contributions:
+- In this work, we experimentally demonstrated reso- nant dipolar interactions between Rydberg Rb atoms and KRb molecules in an optical dipole trap (ODT) and developed a quantitative model to explain our ob- servations.
+- This work provides an experimental demonstration and measurement of resonant dipolar interactions be- tween ultracold Rydberg atoms and polar molecules, paving the way for realizing hybrid systems for quan- tum computation and simulation.
+- This work is supported by the U.S. Department of Energy (DOE), Office of Science, Basic Energy Sciences (BES), under Award No.
+- ∗ These authors contributed equally to this work.
+
+📚 Summary:
+resonant dipolar interactions between Rydberg atoms and ultracold polar molecules have been demonstrated . a combination of different physical platforms can expand the realm of quantum ap-plications .

@@ -1,34 +1,45 @@
 from transformers import pipeline
-import math
+import nltk
+from nltk.tokenize import sent_tokenize
 
-# Load the summarization pipeline
-summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
+nltk.download('punkt', quiet=True)
 
-def chunk_text(text, max_chunk_tokens=1024):
-    # Split text into smaller chunks based on token limit
-    sentences = text.split('. ')
-    current_chunk = ""
-    chunks = []
-
-    for sentence in sentences:
-        if len(current_chunk) + len(sentence) <= max_chunk_tokens:
-            current_chunk += sentence + '. '
-        else:
-            chunks.append(current_chunk.strip())
-            current_chunk = sentence + '. '
-
-    if current_chunk:
-        chunks.append(current_chunk.strip())
-
-    return chunks
-
-def summarize_text_offline(text, max_length=200, min_length=100):
-    chunks = chunk_text(text)
-    summaries = []
-
-    for chunk in chunks:
-        summary = summarizer(chunk, max_length=max_length, min_length=min_length, do_sample=False)
-        summaries.append(summary[0]['summary_text'])
-
-    full_summary = "\n\n".join(summaries)
-    return full_summary
+class PaperSummarizer:
+    def __init__(self, model_name: str = "t5-small"):
+        self.summarizer = pipeline(
+            "summarization",
+            model=model_name,
+            tokenizer=model_name,
+            device=-1
+        )
+    
+    def generate_summary(self, text: str) -> str:
+        """Safe summarization with fallback"""
+        if not text.strip():
+            return ""
+            
+        try:
+            # Simple chunking for short texts
+            if len(text.split()) < 500:
+                result = self.summarizer(
+                    "summarize: " + text,
+                    max_length=150,
+                    min_length=30,
+                    do_sample=False
+                )
+                return result[0]['summary_text']
+            
+            # For longer texts, summarize first 500 words
+            chunks = sent_tokenize(text)
+            first_chunk = " ".join(chunks[:20])[:2000]
+            result = self.summarizer(
+                "summarize: " + first_chunk,
+                max_length=150,
+                min_length=30,
+                do_sample=False
+            )
+            return result[0]['summary_text']
+            
+        except Exception as e:
+            print(f"Summarization failed: {e}")
+            return ""

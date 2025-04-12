@@ -1,49 +1,102 @@
-import re
-import os
-import fitz  # PyMuPDF
+from transformers import pipeline
+from typing import Optional
 
-def extract_text_from_pdf(pdf_path):
-    if not os.path.exists(pdf_path):
-        return ""
-    doc = fitz.open(pdf_path)
-    full_text = ""
-    for page in doc:
-        full_text += page.get_text()
-    return full_text.strip()
+class PaperSummarizer:
+    def __init__(self):
+        self.model = None
+        
+    def load_model(self):
+        """Lazy load the summarization model"""
+        if self.model is None:
+            self.model = pipeline(
+                "summarization",
+                model="facebook/bart-large-cnn",
+                device=-1  # Use CPU
+            )
+    
+    def summarize(self, text: str) -> Optional[str]:
+        """Generate a concise summary"""
+        if not text.strip():
+            return None
+            
+        try:
+            self.load_model()
+            return self.model(
+                text,
+                max_length=150,
+                min_length=30,
+                do_sample=False
+            )[0]['summary_text']
+        except Exception as e:
+            print(f"Summarization error: {e}")
+            return None
 
-def chunk_text_by_sentences(text, max_words=300):
-    # Regex-based sentence splitter
-    sentences = re.split(r'(?<=[.!?])\s+', text)
-    chunks = []
+'''from utils.offline_summarizer import chunk_text
+from transformers import pipeline
+
+summarizer = pipeline("summarization", model="sshleifer/distilbart-cnn-12-6")
+
+def summarize_text_offline(text, default_max=200, default_min=100):
+    chunks = chunk_text(text)
+    summaries = []
+
+    for chunk in chunks:
+        input_length = len(chunk.split())
+        max_len = min(default_max, int(input_length * 0.6))  # Keep summary 60% or less
+        min_len = min(default_min, int(input_length * 0.3))
+
+        # Fallback in case input is very short
+        max_len = max(max_len, 30)
+        min_len = max(min_len, 10)
+
+        summary = summarizer(
+            chunk,
+            max_length=max_len,
+            min_length=min_len,
+            do_sample=False
+        )
+        summaries.append(summary[0]['summary_text'])
+
+    full_summary = "\n\n".join(summaries)
+    return full_summary'''
+
+
+
+
+'''# utils/summarizer.py
+from transformers import pipeline
+
+# Load the summarization pipeline
+summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
+
+def chunk_text(text, max_chunk_tokens=1024):
+    sentences = text.split('. ')
     current_chunk = ""
-    current_length = 0
+    chunks = []
 
     for sentence in sentences:
-        word_count = len(sentence.split())
-        if current_length + word_count <= max_words:
-            current_chunk += sentence + " "
-            current_length += word_count
+        if len(current_chunk) + len(sentence) <= max_chunk_tokens:
+            current_chunk += sentence + '. '
         else:
             chunks.append(current_chunk.strip())
-            current_chunk = sentence + " "
-            current_length = word_count
+            current_chunk = sentence + '. '
 
     if current_chunk:
         chunks.append(current_chunk.strip())
 
     return chunks
 
-def summarize_text_offline(text, summarizer):
-    chunks = chunk_text_by_sentences(text, max_words=300)
-    all_summaries = []
-    for i, chunk in enumerate(chunks):
-        print(f"Summarizing chunk {i+1}/{len(chunks)}...")
-        summary = summarizer(chunk, max_length=200, min_length=30, do_sample=False)[0]["summary_text"]
-        all_summaries.append(summary)
-    return "\n".join(all_summaries)
+def summarize_text_offline(text, max_length=200, min_length=100):
+    chunks = chunk_text(text)
+    summaries = []
 
+    for chunk in chunks:
+        summary = summarizer(chunk, max_length=max_length, min_length=min_length, do_sample=False)
+        summaries.append(summary[0]['summary_text'])
 
-
+    full_summary = "\n\n".join(summaries)
+    return full_summary
+'''
 
 
 

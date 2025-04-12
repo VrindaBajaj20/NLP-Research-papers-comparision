@@ -1,0 +1,11 @@
+🗝️ Important Keywords:
+
+
+🚀 Main Contributions:
+- we explore the dynamics of two-dimensional Rydberg atom arrays coupled to a single-mode optical cavity .
+- we use nonequilibrium diagrammatic techniques to capture nonlinearities and fluctuations beyond mean- field theory .
+- in this regime matter and light equilibrate at dis- tinct—and in some cases opposite—effective temperatures, resembling the original concept of prethermalization .
+- a two-dimensional square lattice of N Rydberg- dressed atoms is situated inside a single-mode optical cavity [71–73], as depicted in Fig.
+
+📚 Summary:
+No summary available.

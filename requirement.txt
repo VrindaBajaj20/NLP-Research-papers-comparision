@@ -1,4 +1,7 @@
-transformers
-torch
-sentencepiece
-PyPDF2
+arxiv>=1.4.5
+gradio>=3.39.0
+nltk>=3.8.1
+PyMuPDF>=1.22.5
+requests>=2.31.0
+transformers>=4.33.0
+torch>=2.0.1

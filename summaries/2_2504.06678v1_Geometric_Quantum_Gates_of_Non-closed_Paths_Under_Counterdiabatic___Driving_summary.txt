@@ -1,0 +1,21 @@
+🗝️ Important Keywords:
+- quantum
+- number
+- adiabatic
+- topological
+- berry
+- quasi
+- geometric
+- closed
+- state
+- parameter
+
+🚀 Main Contributions:
+- We propose a high-fidelity quantum control framework based on the quasi-topological number (νqua), which extends the traditional Chern number to characterize geometric responses in non-closed paths.
+- By introducing a counterdiabatic gauge potential (AGP) that dynamically suppresses non-adiabatic transitions and reconstructs path curvature, we demonstrate that νqua —a relative homotopy invariant of compact manifolds in parameter space—quantifies the robustness of geometric phases during open-path quantum evolution.
+- |ψ⟩ = e−iϕ |n⟩ (3) Analogous to the Berry phase method, we obtain that: i ⟨m|∂λn⟩ = ⟨m| Aλ |n⟩ (4) We demonstrated that this is non-diagonal, and it can maintain the form of geometric phase.
+- Additionally, we find that different values of νqua correspond to distinct quantum effects, as shown in the Table below.
+- By reconstructing the parameter space and imple- menting dynamic modulation, we demonstrate the strict equivalence of the quasi-topological numbers for the 1 → 2 → 3 and 1 → 3 paths in the Rydberg atomic sys- tem.
+
+📚 Summary:
+non-closed paths play a significant role in the fidelity of quan- tum gates . we propose a high-fidelity quantum control framework based on the quasi-topological number qua . this integer ensures gauge-invariant suppression of decoherence errors arising from dynamical phase coupling .
