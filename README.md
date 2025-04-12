@@ -8,19 +8,16 @@ A Natural Language Processing (NLP) project that compares research papers using 
 ## **📌 Table of Contents**  
 - [Features](#-features)  
 - [Installation](#-installation)  
-- [Usage](#-usage)  
-- [Methods & Techniques](#-methods--techniques)  
-- [Dataset](#-dataset)  
-- [Results](#-results)  
+- [Methods](#-methods--techniques)  
+- [Dataset](#-dataset)    
 - [Contributing](#-contributing)  
-- [License](#-license)  
 - [Acknowledgements](#-acknowledgements)  
 
 ---
 
 ##  Features
 - **Text Preprocessing**: Cleans and normalizes research paper text (tokenization, stopword removal, stemming).  
-- **Similarity Comparison**: Uses **TF-IDF, Word2Vec, and BERT embeddings** to compare papers.  
+- **Similarity Comparison**: Uses **TF-IDF, Word2Vec, and BERT/T-5 embeddings** to compare papers.  
 - **Visualization**: Generates similarity matrices and interactive plots.  
 - **User-Friendly**: CLI and/or Jupyter notebook for easy experimentation.  
 
