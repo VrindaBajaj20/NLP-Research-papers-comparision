@@ -9,7 +9,8 @@ A Natural Language Processing (NLP) project that compares research papers using 
 - [Features](#-features)  
 - [Installation](#-installation)  
 - [Methods](#-methods--techniques)  
-- [Dataset](#-dataset)    
+- [Dataset](#-dataset)
+- [Output](#-output)
 - [Contributing](#-contributing)  
 - [Acknowledgements](#-acknowledgements)  
 
@@ -69,6 +70,10 @@ Cosine Similarity
 
 ---
 
+## Output 
+![Alt Text](image-path-or-url)
+
+---
 
 ## Contributing
 Contributions are welcome!  
